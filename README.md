@@ -1,4 +1,4 @@
-# API Gateway Scaffold
+# API Gateway Scaffold [![CircleCI](https://circleci.com/gh/vinacovre/api-gateway-scaffold/tree/master.svg?style=svg)](https://circleci.com/gh/vinacovre/api-gateway-scaffold/tree/master)
 
 Template for an API Gateway in Node.js using Express.js for routing, CircleCI and Jenkins for CI&CD, and containerized with Docker and K8s
 

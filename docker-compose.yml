@@ -6,6 +6,7 @@ services:
     build:
       context: .
       target: "development"
+    command: npm start
     image: "vcovre/api-gateway-scaffold"
     volumes:
       - ".:/usr/src/app"
