@@ -1,0 +1,32 @@
+{
+  "name": "api-gateway-scaffold",
+  "version": "1.0.0",
+  "description": "Template for an API Gateway in Node.js using Express.js for routing, CircleCI and Jenkins for CI&CD, and containerized with Docker and K8s",
+  "main": "src/bin/server.js",
+  "scripts": {
+    "lint": "eslint --ignore-path .gitignore .",
+    "test:watch": "mocha 'test/**/*.spec.js' --watch --require esm",
+    "test": "nyc mocha 'test/**/*.spec.js' --require esm",
+    "start:watch": "nodemon -r esm src/bin/server.js",
+    "start": "node -r esm src/bin/server.js"
+  },
+  "author": "Vinicius Covre <vinicius.covreassis@gmail.com> (http://github.com/vinacovre)",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "getenv": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-watch": "^6.0.1",
+    "husky": "^3.1.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.2",
+    "nyc": "^14.1.1",
+    "supertest": "^4.0.2"
+  }
+}

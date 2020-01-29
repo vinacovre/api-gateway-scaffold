@@ -1,0 +1,53 @@
+version: 2.1
+
+commands:
+  docker-login:
+    steps:
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+jobs:
+
+  test:
+    working_directory: ~/usr/src/app
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - run:
+          name: Installing Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Building Image for tests
+          command: make build
+      - run:
+          name: Running lint
+          command: make lint
+      - run:
+          name: Running test
+          command: make test
+
+  build:
+    working_directory: ~/usr/src/app
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - docker-login
+      - run:
+          name: Building image for deploy
+          command: make image/build TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+      - run:
+          name: Send image to Docker Hub
+          command: make image/push TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test

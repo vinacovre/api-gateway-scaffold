@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP}
+  namespace: vcovre
+  labels:
+    app: ${APP}
+    product: ${APP}
+    release: "${VERSION}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP}
+  template:
+    metadata:
+       labels:
+        app: ${APP}
+        process: worker
+        product: ${APP}
+        release: "${VERSION}"
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: ${APP}
+          image: vcovre/${APP}:${VERSION}
+          imagePullPolicy: IfNotPresent
+          command: ["npm", "start"]
+          resources:
+            requests:
+              cpu: ${APP_REQUESTS_CPU}
+              memory: ${APP_REQUESTS_MEMORY}
+            limits:
+              cpu: ${APP_LIMIT_CPU}
+              memory: ${APP_LIMIT_MEMORY}
